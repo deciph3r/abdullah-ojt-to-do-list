@@ -12,8 +12,8 @@ function TaskList({ task, setTask }) {
   for (let i = 0; i < task.length; i++) {
     temp.push(
       <div key={i} id={`${i}`} onClick={onClickHandler} className=" bg-gray-700 p-5 rounded-md mb-3">
-        <span className="text-white">{task[i]}</span>
-        <button className="mx-3 bg-white p-3 rounded-md">Delete</button>
+        <span className="text-white text-4xl">{task[i]}</span>
+        <button className="mx-3 bg-white p-3 rounded-md float-right">Delete</button>
       </div>
     )
   }
@@ -37,7 +37,7 @@ function App() {
         <button className="bg-white mx-2 p-3" onClick={() => { setTask((task) => [...task, `${inputTask}`]); setInputTask('') }}>Add</button>
       </div>
 
-      <div className="flex flex-col justify-center ml-3">
+      <div className="flex flex-col justify-center mx-3">
         <TaskList task={task} setTask={setTask} />
       </div>
     </div>
