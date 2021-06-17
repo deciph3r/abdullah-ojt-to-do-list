@@ -26,7 +26,7 @@ function Task({ task, setTask, ownTask, status, taskCompleted, setTaskCompleted 
   return (
     <div className={(status ? "bg-gray-700 p-5 rounded-md mb-3 " : "bg-gray-400 p-5 rounded-md mb-3 opacity-75")}>
       <span className="text-white text-4xl">{ownTask}</span>
-      <button className="mx-3 bg-red-600 p-3 rounded-md float-right" onClick={onClickHandlerDelete}>Delete</button>
+      <button className="mx-3 bg-red-600 p-3 rounded-md float-right text-white" onClick={onClickHandlerDelete}>Delete</button>
       <button className="mx-3 bg-white p-3 rounded-md float-right" onClick={onclickHandlerChange}>{status ? "Mark Done" : "Mark Undone"}</button>
     </div >
   )
@@ -49,11 +49,11 @@ function App() {
   return (
     <div className="App ">
       <div className="flex justify-center pt-10 mb-3">
-        <input type="text" placeholder="Enter Task" className="" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
-        <button className="bg-white mx-2 p-3" onClick={() => { setTask((task) => [...task, `${inputTask}`]); setInputTask(''); console.log(task, taskCompleted) }}>Add</button>
+        <input type="text" placeholder="Enter Task" className="p-3" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
+        <button className=" mx-2 p-3 bg-green-600 rounded-md text-white" onClick={() => { setTask((task) => [...task, `${inputTask}`]); setInputTask(''); console.log(task, taskCompleted) }}>Add</button>
       </div>
 
-      <div className="flex justify-center" onClick={radioHandler}>
+      <div className="flex justify-center mb-3" onClick={radioHandler}>
         <div className="mx-3">
           <input type="radio" name="choice" value="all" />
           <span>All</span>
