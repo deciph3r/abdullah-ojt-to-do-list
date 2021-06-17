@@ -3,9 +3,17 @@ import { useState } from "react";
 
 function Task({ task, setTask, ownTask, status, taskCompleted, setTaskCompleted }) {
   const onClickHandlerDelete = function () {
-    const t = task.filter((element) => element !== ownTask)
-    setTask(t)
+    if (status) {
+      const t = task.filter((element) => element !== ownTask)
+      setTask(t)
+    }
+    else {
+      const t = taskCompleted.filter((element) => element !== ownTask)
+      setTaskCompleted(t)
+
+    }
   }
+
   const onclickHandlerChange = function () {
     if (status) {
       let t = task.filter((element) => element !== ownTask)
