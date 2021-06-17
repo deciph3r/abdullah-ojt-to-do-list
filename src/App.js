@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 function Task({ task, setTask, ownTask, status, taskCompleted, setTaskCompleted }) {
   const onClickHandlerDelete = function () {
     (status) ?
@@ -28,11 +27,10 @@ function Task({ task, setTask, ownTask, status, taskCompleted, setTaskCompleted 
   )
 }
 
-
 function App() {
 
-  const [task, setTask] = useState([1, 2, 3]);
-  const [taskCompleted, setTaskCompleted] = useState([4, 5, 6]);
+  const [task, setTask] = useState([]);
+  const [taskCompleted, setTaskCompleted] = useState([]);
   const [inputTask, setInputTask] = useState('');
   const [show, setShow] = useState('all');
 
@@ -42,11 +40,17 @@ function App() {
     }
   }
 
+  const addButtonHandler = function () {
+    const newTask = inputTask.toString().trim();
+    setInputTask('');
+    task.includes(newTask) || taskCompleted.includes(newTask) || setTask((task) => [...task, newTask])
+  }
+
   return (
     <div className="App ">
       <div className="flex justify-center pt-10 mb-3">
         <input type="text" placeholder="Enter Task" className="p-3" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
-        <button className=" mx-2 p-3 bg-green-600 rounded-md text-white" onClick={() => { setTask((task) => [...task, inputTask]); setInputTask(''); console.log(task, taskCompleted) }}>Add</button>
+        <button className=" mx-2 p-3 bg-green-600 rounded-md text-white" onClick={addButtonHandler}>Add</button>
       </div>
 
       <div className="flex justify-center mb-3" onClick={radioHandler}>
@@ -64,28 +68,15 @@ function App() {
         </div>
       </div>
 
-
-      {
-        (show === 'active' || show === 'all') &&
-        <div className="flex flex-col justify-center mx-3">
-          {
-            task.map(element => {
-              return <Task key={element} task={task} ownTask={element} setTask={setTask} status taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />
-            })
-          }
-        </div>
-      }
-
-      {
-        (show === 'completed' || show === 'all') &&
-        <div className="flex flex-col justify-center mx-3">
-          {
-            taskCompleted.map(element => {
-              return <Task key={element} task={task} ownTask={element} setTask={setTask} status={false} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />
-            })
-          }
-        </div>
-      }
+      <div className="flex flex-col mx-3">
+        {
+          (show === 'active' || show === 'all') &&
+          task.map(element => <Task key={element} task={task} ownTask={element} setTask={setTask} status taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />)
+        }{
+          (show === 'completed' || show === 'all') &&
+          taskCompleted.map(element => <Task key={element} task={task} ownTask={element} setTask={setTask} status={false} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />)
+        }
+      </div>
 
     </div>
   );
