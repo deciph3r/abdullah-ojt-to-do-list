@@ -1,28 +1,14 @@
 import { useState } from "react";
 
-function Task({ task, setTask, ownTask, status, taskCompleted, setTaskCompleted }) {
-  const onClickHandlerDelete = function () {
-    (status) ?
-      setTask((task) => task.filter(element => element !== ownTask)) :
-      setTaskCompleted((taskCompleted) => taskCompleted.filter(element => element !== ownTask))
-  }
-
-  const onclickHandlerChange = function () {
-    if (status) {
-      setTask((task) => task.filter(element => element !== ownTask))
-      setTaskCompleted((taskCompleted) => [...taskCompleted, ownTask])
-    }
-    else {
-      setTaskCompleted((taskCompleted) => taskCompleted.filter(element => element !== ownTask))
-      setTask((task) => [...task, ownTask])
-    }
-  }
+function Task({ ownTask, setTask, choice }) {
+  const [status, setStatus] = useState(true)
 
   return (
+    (choice === 'all' || (choice === 'active' && status === true) || (choice === 'completed' && status === false)) &&
     <div className={(status ? "bg-gray-700 p-5 rounded-md mb-3 " : "bg-gray-400 p-5 rounded-md mb-3 opacity-75")}>
       <span className="text-white text-4xl">{ownTask}</span>
-      <button className="mx-3 bg-red-600 p-3 rounded-md float-right text-white" onClick={onClickHandlerDelete}>Delete</button>
-      <button className="mx-3 bg-white p-3 rounded-md float-right" onClick={onclickHandlerChange}>{status ? "Mark Done" : "Mark Undone"}</button>
+      <button className="mx-3 bg-red-600 p-3 rounded-md float-right text-white" onClick={() => setTask((task) => task.filter(element => element !== ownTask))}>Delete</button>
+      <button className="mx-3 bg-white p-3 rounded-md float-right" onClick={() => { setStatus(!status) }}>{status ? "Mark Done" : "Mark Undone"}</button>
     </div >
   )
 }
@@ -30,7 +16,6 @@ function Task({ task, setTask, ownTask, status, taskCompleted, setTaskCompleted 
 function App() {
 
   const [task, setTask] = useState([]);
-  const [taskCompleted, setTaskCompleted] = useState([]);
   const [inputTask, setInputTask] = useState('');
   const [show, setShow] = useState('all');
 
@@ -43,7 +28,7 @@ function App() {
   const addButtonHandler = function () {
     const newTask = inputTask.toString().trim();
     setInputTask('');
-    task.includes(newTask) || taskCompleted.includes(newTask) || setTask((task) => [...task, newTask])
+    task.includes(newTask) || setTask((task) => [...task, newTask])
   }
 
   return (
@@ -69,13 +54,7 @@ function App() {
       </div>
 
       <div className="flex flex-col mx-3">
-        {
-          (show === 'active' || show === 'all') &&
-          task.map(element => <Task key={element} task={task} ownTask={element} setTask={setTask} status taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />)
-        }{
-          (show === 'completed' || show === 'all') &&
-          taskCompleted.map(element => <Task key={element} task={task} ownTask={element} setTask={setTask} status={false} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />)
-        }
+        {task.map((element) => <Task task={task} setTask={setTask} ownTask={element} choice={show} />)}
       </div>
 
     </div>
