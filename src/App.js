@@ -3,31 +3,19 @@ import { useState } from "react";
 
 function Task({ task, setTask, ownTask, status, taskCompleted, setTaskCompleted }) {
   const onClickHandlerDelete = function () {
-    if (status) {
-      const t = task.filter((element) => element !== ownTask)
-      setTask(t)
-    }
-    else {
-      const t = taskCompleted.filter((element) => element !== ownTask)
-      setTaskCompleted(t)
-
-    }
+    (status) ?
+      setTask((task) => task.filter(element => element !== ownTask)) :
+      setTaskCompleted((taskCompleted) => taskCompleted.filter(element => element !== ownTask))
   }
 
   const onclickHandlerChange = function () {
     if (status) {
-      let t = task.filter((element) => element !== ownTask)
-      setTask(t)
-      t = taskCompleted.map((element) => element)
-      t.push(ownTask)
-      setTaskCompleted(t)
+      setTask((task) => task.filter(element => element !== ownTask))
+      setTaskCompleted((taskCompleted) => [...taskCompleted, ownTask])
     }
     else {
-      let t = taskCompleted.filter((element) => element !== ownTask)
-      setTaskCompleted(t)
-      t = task.map((element) => element)
-      t.push(ownTask)
-      setTask(t)
+      setTaskCompleted((taskCompleted) => taskCompleted.filter(element => element !== ownTask))
+      setTask((task) => [...task, ownTask])
     }
   }
 
@@ -58,7 +46,7 @@ function App() {
     <div className="App ">
       <div className="flex justify-center pt-10 mb-3">
         <input type="text" placeholder="Enter Task" className="p-3" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
-        <button className=" mx-2 p-3 bg-green-600 rounded-md text-white" onClick={() => { setTask((task) => [...task, `${inputTask}`]); setInputTask(''); console.log(task, taskCompleted) }}>Add</button>
+        <button className=" mx-2 p-3 bg-green-600 rounded-md text-white" onClick={() => { setTask((task) => [...task, inputTask]); setInputTask(''); console.log(task, taskCompleted) }}>Add</button>
       </div>
 
       <div className="flex justify-center mb-3" onClick={radioHandler}>
