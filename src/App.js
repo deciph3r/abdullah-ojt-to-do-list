@@ -69,17 +69,27 @@ function App() {
       </div>
 
 
-      {(show === 'active' || show === 'all') && <div className="flex flex-col justify-center mx-3">
-        {task.map(element => {
-          return <Task key={element} task={task} ownTask={element} setTask={setTask} status taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />
-        })}
-      </div>}
+      {
+        (show === 'active' || show === 'all') &&
+        <div className="flex flex-col justify-center mx-3">
+          {
+            task.map(element => {
+              return <Task key={element} task={task} ownTask={element} setTask={setTask} status taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />
+            })
+          }
+        </div>
+      }
 
-      {(show === 'completed' || show === 'all') && <div className="flex flex-col justify-center mx-3">
-        {taskCompleted.map(element => {
-          return <Task key={element} task={task} ownTask={element} setTask={setTask} status={false} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />
-        })}
-      </div>}
+      {
+        (show === 'completed' || show === 'all') &&
+        <div className="flex flex-col justify-center mx-3">
+          {
+            taskCompleted.map(element => {
+              return <Task key={element} task={task} ownTask={element} setTask={setTask} status={false} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />
+            })
+          }
+        </div>
+      }
 
     </div>
   );
